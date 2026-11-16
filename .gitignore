@@ -40,6 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# 시연 영상 원본 · 편집본 (용량이 커서 git 에 올리지 않고 GitHub 웹에 업로드)
-readme/video/
+# 시연 영상 : 원본(.mov)은 용량이 커서 올리지 않고, 편집본(demo.mp4)만 올림
 *.mov

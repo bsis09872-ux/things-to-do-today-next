@@ -39,9 +39,13 @@
 
 ## 🎬 시연 영상
 
-<!-- GitHub에 업로드한 영상 주소로 바꿔 주세요 -->
-
-VIDEO_URL_HERE
+<p align="center">
+  <a href="./readme/video/demo.mp4">
+    <img src="./readme/images/screen-list.png" alt="시연 영상 보기 (목록 화면)" width="560" />
+  </a>
+  <br />
+  <a href="./readme/video/demo.mp4"><b>▶ 시연 영상 보기 (1분)</b></a>
+</p>
 
 > 3.3배속 · 1분. 로그인 → 목록 → 휴지통 → 등록 → 필터 · 정렬 → 상태 변경 → 상세 · 수정 → 핀 고정 → 영구 삭제 → 404 → 로그아웃 순서입니다.
 > 로그인 화면의 이메일 부분은 개인정보라 흐리게 처리했습니다.
