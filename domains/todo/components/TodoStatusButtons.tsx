@@ -25,6 +25,13 @@ export default function TodoStatusButtons({
                         type="button"
                         size="sm"
                         variant={isCurrent ? 'default' : 'outline'}
+                        // 지금 상태 버튼은 눌러도 소용없어서 disabled 지만, 흐리지 않고 또렷하게 보이게 함
+                        // 나머지 버튼은 색 있는 카드의 글자색을 물려받아 안 보일 수 있어서 글자색을 직접 지정
+                        className={
+                            isCurrent
+                                ? 'disabled:opacity-100'
+                                : 'text-foreground'
+                        }
                         aria-pressed={isCurrent}
                         disabled={disabled || isCurrent}
                         onClick={() => onChange(s)}

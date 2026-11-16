@@ -8,9 +8,11 @@ export const metadata = { title: '페이지를 찾을 수 없어요' };
 export default function NotFound() {
     return (
         <main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-24 text-center">
-            <p className="text-5xl font-bold text-gray-300">404</p>
+            <p className="text-5xl font-bold text-muted-foreground/40">404</p>
             <h1 className="text-xl font-bold">페이지를 찾을 수 없어요</h1>
-            <p className="text-sm text-gray-500">주소를 다시 확인해 주세요.</p>
+            <p className="text-sm text-muted-foreground">
+                주소를 다시 확인해 주세요.
+            </p>
             <Link href="/" className={buttonVariants()}>
                 홈으로
             </Link>

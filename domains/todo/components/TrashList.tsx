@@ -49,7 +49,7 @@ export default function TrashList({ todos }: TrashListProps) {
                 <h1 id="trash-title" className="text-2xl font-bold">
                     휴지통
                 </h1>
-                <p className="text-sm text-gray-500" aria-live="polite">
+                <p className="text-sm text-muted-foreground" aria-live="polite">
                     {optimisticTodos.length}개{isPending && ' · 저장 중…'}
                 </p>
             </div>
@@ -57,7 +57,7 @@ export default function TrashList({ todos }: TrashListProps) {
             <FormMessage message={errorMessage} />
 
             {optimisticTodos.length === 0 ? (
-                <p className="rounded-2xl border border-dashed py-16 text-center text-gray-500">
+                <p className="rounded-2xl border border-dashed py-16 text-center text-muted-foreground">
                     휴지통이 비어 있습니다.
                 </p>
             ) : (
@@ -72,7 +72,7 @@ export default function TrashList({ todos }: TrashListProps) {
                                     {todo.title}
                                 </p>
                                 {todo.deletedAt && (
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-xs text-muted-foreground">
                                         버린 시각{' '}
                                         {formatDateTime(todo.deletedAt)}
                                     </p>

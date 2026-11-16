@@ -13,7 +13,10 @@ export const metadata = { title: '할 일 상세' };
 export default function TodoDetailPage({ params }: PageProps<'/todo/[id]'>) {
     return (
         <section className="mx-auto max-w-xl space-y-4">
-            <Link href="/" className="text-sm text-gray-500 hover:underline">
+            <Link
+                href="/"
+                className="text-sm text-muted-foreground hover:underline"
+            >
                 ← 목록으로
             </Link>
             <Suspense fallback={<TodoDetailSkeleton />}>

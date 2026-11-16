@@ -13,7 +13,7 @@ export default function TodoPinBoard({ pins }: TodoPinBoardProps) {
     return (
         <section
             aria-labelledby="pin-title"
-            className="sticky top-2 z-10 mb-4 rounded-2xl border bg-yellow-50 p-3"
+            className="sticky top-2 z-10 mb-4 rounded-2xl border border-lemon bg-cream shadow-sm p-3"
         >
             <h2
                 id="pin-title"
@@ -23,7 +23,7 @@ export default function TodoPinBoard({ pins }: TodoPinBoardProps) {
                 고정 {pins.length}/{PIN_MAX}
             </h2>
             {pins.length === 0 ? (
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-muted-foreground">
                     카드의 핀 버튼을 눌러 중요한 할 일을 고정해 보세요.
                 </p>
             ) : (
@@ -34,7 +34,7 @@ export default function TodoPinBoard({ pins }: TodoPinBoardProps) {
                                 href={`/todo/${todo.id}`}
                                 className={
                                     todo.status === 'DONE'
-                                        ? 'text-sm text-gray-400 line-through hover:underline'
+                                        ? 'text-sm text-muted-foreground line-through decoration-tomato decoration-2 hover:underline'
                                         : 'text-sm hover:underline'
                                 }
                             >

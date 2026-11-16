@@ -193,10 +193,13 @@ export default function TodoDashboard({ todos, cheer }: TodoDashboardProps) {
         <section aria-labelledby="list-title">
             <div className="mb-4 flex items-end justify-between border-b pb-3">
                 <div>
-                    <h1 id="list-title" className="text-2xl font-bold">
+                    <h1 id="list-title" className="font-serif text-3xl italic">
                         my list
                     </h1>
-                    <p className="text-sm text-gray-500" aria-live="polite">
+                    <p
+                        className="text-sm text-muted-foreground"
+                        aria-live="polite"
+                    >
                         남은 할 일 <strong>{remaining}</strong>개
                         {isPending && ' · 저장 중…'}
                     </p>
@@ -230,7 +233,9 @@ export default function TodoDashboard({ todos, cheer }: TodoDashboardProps) {
                             <p className="font-medium">
                                 {TODO_FILTERS[filter].empty}
                             </p>
-                            <p className="text-sm text-gray-500">{cheer}</p>
+                            <p className="text-sm text-muted-foreground">
+                                {cheer}
+                            </p>
                         </div>
                     ) : (
                         <ul className="grid gap-3 sm:grid-cols-2">

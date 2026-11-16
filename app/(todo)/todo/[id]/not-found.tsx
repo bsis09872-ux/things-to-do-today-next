@@ -6,9 +6,9 @@ import Link from 'next/link';
 export default function TodoNotFound() {
     return (
         <section className="space-y-4 py-16 text-center">
-            <p className="text-5xl font-bold text-gray-300">404</p>
+            <p className="text-5xl font-bold text-muted-foreground/40">404</p>
             <h1 className="text-xl font-bold">할 일을 찾을 수 없어요</h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
                 삭제됐거나 주소가 잘못됐을 수 있어요.
             </p>
             <Link href="/" className={buttonVariants()}>

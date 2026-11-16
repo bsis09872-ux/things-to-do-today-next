@@ -1,4 +1,5 @@
 import UserMenu from '@/domains/auth/components/UserMenu';
+import Brand from '@/shared/components/Brand';
 import Link from 'next/link';
 import { FiTrash2 } from 'react-icons/fi';
 import { Suspense } from 'react';
@@ -8,13 +9,13 @@ export default function TodoLayout({ children }: LayoutProps<'/'>) {
     return (
         <div className="mx-auto w-full max-w-3xl px-4">
             <header className="flex items-center justify-between py-6">
-                <Link href="/" className="text-xl font-bold">
-                    Tdl
+                <Link href="/" aria-label="Things to do today 홈">
+                    <Brand />
                 </Link>
                 <div className="flex items-center gap-3">
                     <Link
                         href="/trash"
-                        className="flex items-center gap-1 text-sm text-gray-600 hover:underline"
+                        className="flex items-center gap-1 text-sm text-muted-foreground hover:underline"
                     >
                         <FiTrash2 aria-hidden />
                         휴지통

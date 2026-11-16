@@ -24,13 +24,13 @@ export default function TodoItem({
     const isPinned = !!todo.pinnedAt;
 
     return (
-        <li className="rounded-2xl border p-4" data-done={isDone}>
+        <li className="todo-card rounded-2xl p-4" data-done={isDone}>
             <div className="mb-3 flex items-start justify-between gap-2">
                 <div className="min-w-0">
                     {todo.dueDate && (
                         <time
                             dateTime={todo.dueDate}
-                            className="block text-xs text-gray-500"
+                            className="block font-mono text-xs opacity-80"
                         >
                             {todo.dueDate}
                         </time>
@@ -39,7 +39,7 @@ export default function TodoItem({
                         href={`/todo/${todo.id}`}
                         className={
                             isDone
-                                ? 'font-medium text-gray-400 line-through hover:underline'
+                                ? 'font-medium line-through decoration-tomato decoration-[3px] hover:underline'
                                 : 'font-medium hover:underline'
                         }
                     >

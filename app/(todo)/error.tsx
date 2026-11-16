@@ -27,7 +27,7 @@ export default function TodoError({
                 aria-hidden
             />
             <h1 className="text-xl font-bold">문제가 생겼어요</h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
                 잠시 후 다시 시도해 주세요. 계속 안 되면 새로고침해 보세요.
             </p>
             <div className="flex justify-center gap-2">

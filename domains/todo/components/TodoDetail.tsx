@@ -12,10 +12,10 @@ export default function TodoDetail({ todo }: TodoDetailProps) {
     const isDone = todo.status === 'DONE';
 
     return (
-        <article className="space-y-6 rounded-2xl border p-6">
+        <article className="space-y-6 rounded-2xl border bg-card p-6">
             <header className="space-y-1">
                 {todo.dueDate && (
-                    <p className="text-sm text-gray-500">
+                    <p className="font-mono text-sm text-muted-foreground">
                         마감일{' '}
                         <time dateTime={todo.dueDate}>{todo.dueDate}</time>
                     </p>
@@ -23,7 +23,7 @@ export default function TodoDetail({ todo }: TodoDetailProps) {
                 <h1
                     className={
                         isDone
-                            ? 'text-2xl font-bold text-gray-400 line-through'
+                            ? 'text-2xl font-bold text-muted-foreground line-through decoration-tomato decoration-[3px]'
                             : 'text-2xl font-bold'
                     }
                 >
@@ -35,12 +35,12 @@ export default function TodoDetail({ todo }: TodoDetailProps) {
             {todo.content ? (
                 <p className="whitespace-pre-wrap">{todo.content}</p>
             ) : (
-                <p className="text-gray-400">메모가 없습니다.</p>
+                <p className="text-muted-foreground">메모가 없습니다.</p>
             )}
 
             <TodoDetailActions id={todo.id} status={todo.status} />
 
-            <footer className="border-t pt-4 text-xs text-gray-500">
+            <footer className="border-t pt-4 font-mono text-xs text-muted-foreground">
                 <p>등록 {formatDateTime(todo.createdAt)}</p>
                 {todo.updatedAt && <p>수정 {formatDateTime(todo.updatedAt)}</p>}
             </footer>

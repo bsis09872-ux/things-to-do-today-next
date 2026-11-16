@@ -67,7 +67,8 @@ export default function TodoForm({ todo }: TodoFormProps) {
 
                 <div>
                     <label htmlFor="dueDate" className="mb-1 block text-sm">
-                        마감일 <span className="text-gray-400">(선택)</span>
+                        마감일{' '}
+                        <span className="text-muted-foreground">(선택)</span>
                     </label>
                     <Input
                         id="dueDate"
@@ -82,7 +83,8 @@ export default function TodoForm({ todo }: TodoFormProps) {
 
                 <div>
                     <label htmlFor="content" className="mb-1 block text-sm">
-                        메모 <span className="text-gray-400">(선택)</span>
+                        메모{' '}
+                        <span className="text-muted-foreground">(선택)</span>
                     </label>
                     <textarea
                         id="content"
@@ -93,7 +95,7 @@ export default function TodoForm({ todo }: TodoFormProps) {
                         value={form.content}
                         onChange={onChange}
                         aria-invalid={!!state.errors?.content}
-                        className="w-full rounded-lg border px-2.5 py-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                        className="w-full rounded-lg border border-input bg-transparent px-2.5 py-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                     />
                     <FieldError message={state.errors?.content} />
                 </div>

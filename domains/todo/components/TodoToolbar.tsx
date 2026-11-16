@@ -30,8 +30,8 @@ export default function TodoToolbar({
                             onClick={() => onFilterChange(key)}
                             className={
                                 isCurrent
-                                    ? 'rounded-full bg-gray-900 px-3 py-1 text-sm text-white'
-                                    : 'rounded-full border px-3 py-1 text-sm hover:bg-gray-100'
+                                    ? 'rounded-full bg-primary px-3 py-1 text-sm text-primary-foreground'
+                                    : 'rounded-full border px-3 py-1 text-sm hover:bg-muted'
                             }
                         >
                             {TODO_FILTERS[key].label} {counts[key]}
@@ -41,7 +41,7 @@ export default function TodoToolbar({
             </div>
 
             <label className="flex items-center gap-2 text-sm">
-                <span className="text-gray-500">정렬</span>
+                <span className="text-muted-foreground">정렬</span>
                 <select
                     value={sort}
                     onChange={(e) => onSortChange(e.target.value as TodoSort)}

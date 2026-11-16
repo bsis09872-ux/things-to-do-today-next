@@ -5,14 +5,14 @@ export default function TodoDetailSkeleton() {
             <span className="sr-only">할 일을 불러오는 중…</span>
             <div className="space-y-6 rounded-2xl border p-6" aria-hidden>
                 <div className="space-y-2">
-                    <div className="h-4 w-32 rounded bg-gray-200" />
-                    <div className="h-8 w-2/3 rounded bg-gray-200" />
+                    <div className="h-4 w-32 rounded bg-muted" />
+                    <div className="h-8 w-2/3 rounded bg-muted" />
                 </div>
                 <div className="space-y-2">
-                    <div className="h-4 w-full rounded bg-gray-200" />
-                    <div className="h-4 w-5/6 rounded bg-gray-200" />
+                    <div className="h-4 w-full rounded bg-muted" />
+                    <div className="h-4 w-5/6 rounded bg-muted" />
                 </div>
-                <div className="h-8 w-48 rounded bg-gray-200" />
+                <div className="h-8 w-48 rounded bg-muted" />
             </div>
         </div>
     );

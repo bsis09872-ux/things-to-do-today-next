@@ -11,7 +11,7 @@ export default function TodoEmpty({ cheer }: TodoEmptyProps) {
     return (
         <div className="space-y-3 rounded-2xl border border-dashed py-16 text-center">
             <p className="font-medium">등록된 할 일이 없어요</p>
-            <p className="text-sm text-gray-500">{cheer}</p>
+            <p className="text-sm text-muted-foreground">{cheer}</p>
             <Link
                 href="/todo/new"
                 className={buttonVariants({ variant: 'outline' })}
