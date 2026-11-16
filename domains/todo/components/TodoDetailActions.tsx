@@ -1,9 +1,10 @@
 'use client';
 
+import FormMessage from '@/domains/auth/components/FormMessage';
 import { Button, buttonVariants } from '@/shared/components/ui/button';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useOptimistic, useTransition } from 'react';
+import { useOptimistic, useState, useTransition } from 'react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import {
     changeTodoStatusAction,
@@ -27,13 +28,15 @@ export default function TodoDetailActions({
     const [isPending, startTransition] = useTransition();
     // 서버 응답 전에 버튼 상태를 먼저 바꿔 보여줌 (실패하면 자동으로 원래 상태로)
     const [optimisticStatus, setOptimisticStatus] = useOptimistic(status);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const onStatusChange = (next: TodoStatus) => {
+        setErrorMessage('');
         startTransition(async () => {
             setOptimisticStatus(next);
             const result = await changeTodoStatusAction(id, next);
             if (!result.success) {
-                alert(result.message ?? '상태를 바꾸지 못했습니다.');
+                setErrorMessage(result.message ?? '상태를 바꾸지 못했습니다.');
             }
         });
     };
@@ -41,44 +44,49 @@ export default function TodoDetailActions({
     const onTrash = () => {
         if (!confirm('이 할 일을 휴지통으로 보낼까요?')) return;
 
+        setErrorMessage('');
         startTransition(async () => {
             const result = await moveTodoToTrashAction(id);
             if (result.success) {
                 router.replace('/'); // 지운 할 일의 상세에 머물 이유가 없어서 목록으로
             } else {
-                alert(result.message ?? '삭제하지 못했습니다.');
+                setErrorMessage(result.message ?? '삭제하지 못했습니다.');
             }
         });
     };
 
     return (
-        <div className="flex flex-wrap items-center justify-between gap-3">
-            <TodoStatusButtons
-                status={optimisticStatus}
-                onChange={onStatusChange}
-                disabled={isPending}
-            />
-            <div className="flex gap-2">
-                <Link
-                    href={`/todo/${id}/edit`}
-                    className={buttonVariants({
-                        variant: 'outline',
-                        size: 'sm',
-                    })}
-                >
-                    <FiEdit2 aria-hidden />
-                    수정
-                </Link>
-                <Button
-                    type="button"
-                    variant="destructive"
-                    size="sm"
+        <div>
+            {/* alert 대신 버튼 위에 실패 안내를 보여줌 */}
+            <FormMessage message={errorMessage} />
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <TodoStatusButtons
+                    status={optimisticStatus}
+                    onChange={onStatusChange}
                     disabled={isPending}
-                    onClick={onTrash}
-                >
-                    <FiTrash2 aria-hidden />
-                    삭제
-                </Button>
+                />
+                <div className="flex gap-2">
+                    <Link
+                        href={`/todo/${id}/edit`}
+                        className={buttonVariants({
+                            variant: 'outline',
+                            size: 'sm',
+                        })}
+                    >
+                        <FiEdit2 aria-hidden />
+                        수정
+                    </Link>
+                    <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        disabled={isPending}
+                        onClick={onTrash}
+                    >
+                        <FiTrash2 aria-hidden />
+                        삭제
+                    </Button>
+                </div>
             </div>
         </div>
     );
