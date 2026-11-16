@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import { createServerClient } from '@/shared/lib/supabase';
 import type { ActionState } from '@/shared/types/action.types';
