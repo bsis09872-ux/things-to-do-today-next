@@ -18,7 +18,7 @@ create table public.todos(
     due_date date, -- 마감일 (D-day, 날짜순 정렬)
     pinned_at timestamptz, -- 핀 고정 시각 (null이면 고정 안 함)
     sort_order integer not null default 0, -- 같은 날짜 안 우선순위 (드래그)
-    created_at timestamptz,
+    created_at timestamptz not null default now(), -- 등록 시각 (DB 가 자동으로 넣음)
     updated_at timestamptz,
     deleted_at timestamptz -- 휴지통 (null이면 목록, 값이 있으면 휴지통)
 );
