@@ -7,6 +7,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import type { TodoInput, TodoStatus } from '../types/todo.types';
 import { isTodoStatus } from '../utils/todoStatus';
+import { PIN_MAX } from '../utils/todoView';
 import { isUuid, validateTodoInput } from '../utils/todoValidation';
 
 // 서버 액션은 누구나 호출 할 수 있는 공개 API라서, 모든 액션이 (1)로그인 확인 (2) 입력값 검사를 스스로 한다. 화면에서 막았더라도 다시 한다.
@@ -154,7 +155,8 @@ export async function moveTodoToTrashAction(id: string): Promise<ActionState> {
 
     const { data, error } = await supabase
         .from('todos')
-        .update({ deleted_at: new Date().toISOString() })
+        // 휴지통으로 갈 때 핀도 풀어 둠 (복구했을 때 핀이 3개를 넘지 않게)
+        .update({ deleted_at: new Date().toISOString(), pinned_at: null })
         .eq('id', id)
         .eq('user_id', user.id)
         .is('deleted_at', null)
@@ -166,5 +168,117 @@ export async function moveTodoToTrashAction(id: string): Promise<ActionState> {
     }
 
     revalidatePath('/');
+    revalidatePath('/trash');
+    return { success: true };
+}
+
+// 핀 고정 / 해제 (pin = true 면 고정, false 면 해제)
+export async function toggleTodoPinAction(
+    id: string,
+    pin: boolean,
+): Promise<ActionState> {
+    const user = await getCurrentUser();
+    if (!user) return LOGIN_REQUIRED;
+
+    if (!isUuid(id) || typeof pin !== 'boolean') {
+        return { success: false, message: '잘못된 요청입니다.' };
+    }
+
+    const supabase = createServerClient();
+
+    // 화면에서 막아도 서버에서 한 번 더 : 이미 3개면 더 고정 못 함
+    if (pin) {
+        const { count, error: countError } = await supabase
+            .from('todos')
+            .select('id', { count: 'exact', head: true }) // head: 행은 안 받고 개수만
+            .eq('user_id', user.id)
+            .is('deleted_at', null)
+            .not('pinned_at', 'is', null);
+
+        if (countError) {
+            return { success: false, message: '핀을 고정하지 못했습니다.' };
+        }
+        if ((count ?? 0) >= PIN_MAX) {
+            return {
+                success: false,
+                message: `핀은 최대 ${PIN_MAX}개까지 고정할 수 있어요.`,
+            };
+        }
+    }
+
+    const { data, error } = await supabase
+        .from('todos')
+        .update({ pinned_at: pin ? new Date().toISOString() : null })
+        .eq('id', id)
+        .eq('user_id', user.id)
+        .is('deleted_at', null)
+        .select('id')
+        .maybeSingle();
+
+    if (error || !data) {
+        return { success: false, message: '핀을 바꾸지 못했습니다.' };
+    }
+
+    revalidatePath('/');
+    return { success: true };
+}
+
+// 휴지통 -> 목록으로 복구
+export async function restoreTodoAction(id: string): Promise<ActionState> {
+    const user = await getCurrentUser();
+    if (!user) return LOGIN_REQUIRED;
+
+    if (!isUuid(id)) {
+        return { success: false, message: '잘못된 요청입니다.' };
+    }
+
+    const supabase = createServerClient();
+
+    const { data, error } = await supabase
+        .from('todos')
+        .update({ deleted_at: null })
+        .eq('id', id)
+        .eq('user_id', user.id)
+        .not('deleted_at', 'is', null) // 휴지통에 있는 것만
+        .select('id')
+        .maybeSingle();
+
+    if (error || !data) {
+        return { success: false, message: '복구하지 못했습니다.' };
+    }
+
+    revalidatePath('/');
+    revalidatePath('/trash');
+    return { success: true };
+}
+
+// 영구 삭제 : DB 에서 실제로 지움 (되돌릴 수 없음)
+// 휴지통에 있는 것만 지울 수 있게 해서, 목록에 있는 할 일이 실수로 바로 지워지지 않게 함
+export async function deleteTodoForeverAction(
+    id: string,
+): Promise<ActionState> {
+    const user = await getCurrentUser();
+    if (!user) return LOGIN_REQUIRED;
+
+    if (!isUuid(id)) {
+        return { success: false, message: '잘못된 요청입니다.' };
+    }
+
+    const supabase = createServerClient();
+
+    const { data, error } = await supabase
+        .from('todos')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user.id)
+        .not('deleted_at', 'is', null)
+        .select('id')
+        .maybeSingle();
+
+    if (error || !data) {
+        return { success: false, message: '영구 삭제하지 못했습니다.' };
+    }
+
+    revalidatePath('/trash');
     return { success: true };
 }
