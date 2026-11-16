@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tdl">
+  <title>Tdl · Things to do today</title>
+  <!-- 종이색 바탕 -->
+  <rect width="64" height="64" rx="14" fill="#FBF6EC"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- T : 잉크 남색 (세로획이 d의 기둥을 겸함) -->
+    <path d="M10.5 14.5 C18 13.2 29 13.2 35.5 15.2" stroke="#1E3A6E"/>
+    <path d="M26 14.5 V46.5" stroke="#1E3A6E"/>
+    <!-- d 의 둥근 부분 : 풀 블루 -->
+    <path d="M26 34.5 C23 28.8 15.6 28.6 12.6 35.4 C9.8 41.8 13 49.4 19.2 48.8 C22 48.5 24.4 47 26 45.4" stroke="#4E97AE"/>
+    <!-- l : 토마토 레드 필기체 고리 -->
+    <path d="M26 46.5 C32.5 47 40.6 41 44.6 31.4 C48.6 21.6 47.6 11.6 43.4 11 C38.6 10.4 35 20.4 34 30 C33.2 38.6 35.4 47.6 41.4 48.2 C44.2 48.4 46.4 46.6 48.6 43.8" stroke="#C9483C"/>
+  </g>
+</svg>
