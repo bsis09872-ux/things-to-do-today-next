@@ -26,8 +26,8 @@ export async function signInAction(
     // [비밀번호는 trim 하지 않는다]
     // - 비밀번호의 앞뒤 공백도 사용자가 입력한 비밀번호의 일부로 본다.
     //   (NIST 비밀번호 가이드라인 : 공백 포함 모든 문자를 허용하고, 입력값을 몰래 바꾸지 말 것)
-    // - 튜터 코드는 회원가입에서만 trim 해서, ' abc12345' 로 가입하면 'abc12345' 가 저장되고
-    //   로그인은 ' abc12345' 를 그대로 보내 로그인이 안 되는 버그가 있었다.
+    // - 가입에서만 trim 하면 ' abc12345' 로 가입 -> 'abc12345' 저장,
+    //   로그인은 ' abc12345' 로 시도해서 실패함.
     // - 가입 · 로그인 둘 다 trim 하지 않아서 항상 같은 값으로 비교되게 맞췄다.
     // - 이메일은 앞뒤 공백이 실수일 뿐이라 trim 한다 (아래 signInWithPassword).
     const password = String(formData.get('password') ?? '');
@@ -61,9 +61,8 @@ export async function signInAction(
         .eq('id', authData.user.id)
         .maybeSingle(); // 결과가 없으면 에러 대신 null
 
-    // [튜터 코드 수정] profile.deletedAt → profile.deleted_at
-    // Supabase 는 DB 칸 이름을 그대로 돌려준다 → { id, deleted_at }
-    // 튜터 코드는 없는 이름(deletedAt)을 읽어서 늘 undefined → 탈퇴한 계정도 로그인됐다.
+    // Supabase 는 DB 칸 이름을 그대로 돌려줌 -> { id, deleted_at }
+    // deletedAt 으로 읽으면 늘 undefined -> 탈퇴한 계정도 로그인됨. 그래서 deleted_at 으로 읽음.
     if (!profile || profile.deleted_at) {
         await supabase.auth.signOut();
         return {

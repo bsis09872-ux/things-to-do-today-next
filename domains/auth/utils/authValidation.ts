@@ -1,20 +1,20 @@
-import type { SignInInput, SignUpInput } from "../types/auth.types";
+import type { SignInInput, SignUpInput } from '../types/auth.types';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function validateSignInInput (
+export function validateSignInInput(
     input: SignInInput,
 ): Record<string, string> {
     const errors: Record<string, string> = {};
 
     if (!input.email.trim()) {
-        errors.email = "이메일 주소를 입력해 주세요.";
+        errors.email = '이메일 주소를 입력해 주세요.';
     } else if (!EMAIL_REGEX.test(input.email.trim())) {
-        errors.email = "올바른 이메일 형식이 아닙니다.";
+        errors.email = '올바른 이메일 형식이 아닙니다.';
     }
 
     if (!input.password) {
-        errors.password = "비밀번호를 입력해 주세요.";
+        errors.password = '비밀번호를 입력해 주세요.';
     }
 
     return errors;

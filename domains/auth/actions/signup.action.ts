@@ -67,4 +67,3 @@ export async function signUpAction(
         data: { needsEmailConfirm },
     };
 }
-

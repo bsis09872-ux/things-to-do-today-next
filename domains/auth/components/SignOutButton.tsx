@@ -7,7 +7,7 @@ import { logoutAction } from '../actions/logout.action';
 
 // 'use client' 인 이유: 클릭 이벤트와 로그아웃 후 페이지 이동은 브라우저에서 일어난다.
 export default function SignOutButton() {
-    // useTransition: 서버 액션이 끝날 때까지 isPending 이 true (튜터 코드의 useState 대신)
+    // useTransition: 서버 액션이 끝날 때까지 isPending 이 true
     const [isPending, startTransition] = useTransition();
 
     const onLogout = () => {
