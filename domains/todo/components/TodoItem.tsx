@@ -1,5 +1,6 @@
 import { Button } from '@/shared/components/ui/button';
 import Link from 'next/link';
+import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
 import { FiTrash2 } from 'react-icons/fi';
 import type { Todo, TodoStatus } from '../types/todo.types';
 import TodoStatusButtons from './TodoStatusButtons';
@@ -8,6 +9,7 @@ interface TodoItemProps {
     todo: Todo;
     onStatusChange: (id: string, status: TodoStatus) => void;
     onTrash: (id: string) => void;
+    onPinToggle: (id: string, pin: boolean) => void; // pin: true 면 고정, false 면 해제
 }
 
 // 할 일 카드 한 장, 데이터와 할 일을 props로 받아서 그리기만 함.
@@ -16,8 +18,10 @@ export default function TodoItem({
     todo,
     onStatusChange,
     onTrash,
+    onPinToggle,
 }: TodoItemProps) {
     const isDone = todo.status === 'DONE';
+    const isPinned = !!todo.pinnedAt;
 
     return (
         <li className="rounded-2xl border p-4" data-done={isDone}>
@@ -42,15 +46,31 @@ export default function TodoItem({
                         {todo.title}
                     </Link>
                 </div>
-                <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label={`${todo.title} 휴지통으로 보내기`}
-                    onClick={() => onTrash(todo.id)}
-                >
-                    <FiTrash2 aria-hidden />
-                </Button>
+                <div className="flex shrink-0">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        aria-label={`${todo.title} 핀 고정`}
+                        aria-pressed={isPinned}
+                        onClick={() => onPinToggle(todo.id, !isPinned)}
+                    >
+                        {isPinned ? (
+                            <BsPinAngleFill aria-hidden />
+                        ) : (
+                            <BsPinAngle aria-hidden />
+                        )}
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        aria-label={`${todo.title} 휴지통으로 보내기`}
+                        onClick={() => onTrash(todo.id)}
+                    >
+                        <FiTrash2 aria-hidden />
+                    </Button>
+                </div>
             </div>
 
             <TodoStatusButtons
