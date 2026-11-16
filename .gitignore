@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 시연 영상 원본 · 편집본 (용량이 커서 git 에 올리지 않고 GitHub 웹에 업로드)
+readme/video/
+*.mov
