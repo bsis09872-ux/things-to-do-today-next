@@ -1,4 +1,5 @@
 import TodoForm from '@/domains/todo/components/TodoForm';
+import TodoDetailSkeleton from '@/domains/todo/components/TodoDetailSkeleton';
 import { getTodoById } from '@/domains/todo/queries/getTodoById.query';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
@@ -9,9 +10,7 @@ export default function EditTodoPage({ params }: PageProps<'/todo/[id]/edit'>) {
     return (
         <section className="mx-auto max-w-xl">
             <h1 className="mb-6 text-2xl font-bold">할 일 수정</h1>
-            <Suspense
-                fallback={<p className="py-16 text-center">불러오는 중…</p>}
-            >
+            <Suspense fallback={<TodoDetailSkeleton />}>
                 {params.then(({ id }) => (
                     <EditTodoContent id={id} />
                 ))}
